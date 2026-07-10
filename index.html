@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Attendance Register</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="brand-mark">§</span>
+      <div>
+        <h1>Attendance Register</h1>
+        <p class="tagline">One line per roll call. Nothing else to it.</p>
+      </div>
+    </div>
+    <div class="today" id="todayLabel"></div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- Entry form -->
+  <section class="card entry-card" aria-labelledby="entryHeading">
+    <h2 id="entryHeading" class="card-heading">Mark attendance</h2>
+    <form id="entryForm" class="entry-form" novalidate>
+      <div class="field">
+        <label for="rollNo">Roll No</label>
+        <input type="text" id="rollNo" name="rollNo" placeholder="101" autocomplete="off" required />
+      </div>
+      <div class="field field-wide">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" placeholder="Full name" autocomplete="off" required />
+      </div>
+      <div class="field">
+        <label for="date">Date</label>
+        <input type="date" id="date" name="date" required />
+      </div>
+      <div class="field">
+        <label for="status">Status</label>
+        <select id="status" name="status" required>
+          <option value="Present">Present</option>
+          <option value="Absent">Absent</option>
+          <option value="Late">Late</option>
+        </select>
+      </div>
+      <div class="field field-action">
+        <label aria-hidden="true">&nbsp;</label>
+        <button type="submit" id="submitBtn" class="btn-primary">Add entry</button>
+      </div>
+    </form>
+    <p id="formError" class="form-error" role="alert" hidden></p>
+    <input type="hidden" id="editId" value="" />
+  </section>
+
+  <!-- Filters + summary -->
+  <section class="toolbar">
+    <div class="filters">
+      <div class="field">
+        <label for="filterDate">Date</label>
+        <input type="date" id="filterDate" />
+      </div>
+      <div class="field">
+        <label for="filterStatus">Status</label>
+        <select id="filterStatus">
+          <option value="">All</option>
+          <option value="Present">Present</option>
+          <option value="Absent">Absent</option>
+          <option value="Late">Late</option>
+        </select>
+      </div>
+      <div class="field field-wide">
+        <label for="searchBox">Search</label>
+        <input type="text" id="searchBox" placeholder="Roll no or name" autocomplete="off" />
+      </div>
+      <div class="field field-action">
+        <label aria-hidden="true">&nbsp;</label>
+        <button type="button" id="clearFilters" class="btn-ghost">Clear filters</button>
+      </div>
+    </div>
+    <div class="summary" id="summary" aria-live="polite"></div>
+  </section>
+
+  <!-- Ledger table -->
+  <section class="card ledger-card">
+    <table class="ledger" id="ledgerTable">
+      <thead>
+        <tr>
+          <th class="col-roll">Roll No</th>
+          <th class="col-name">Name</th>
+          <th class="col-date">Date</th>
+          <th class="col-status">Status</th>
+          <th class="col-actions"><span class="sr-only">Actions</span></th>
+        </tr>
+      </thead>
+      <tbody id="ledgerBody">
+        <!-- rows injected by script.js -->
+      </tbody>
+    </table>
+    <p id="emptyState" class="empty-state" hidden>No entries match these filters yet.</p>
+    <p id="loadingState" class="empty-state">Loading register…</p>
+  </section>
+
+</main>
+
+<div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+<script src="script.js"></script>
+</body>
+</html>
